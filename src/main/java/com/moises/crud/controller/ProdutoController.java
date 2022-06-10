@@ -2,14 +2,11 @@ package com.moises.crud.controller;
 
 import java.util.List;
 
+import com.moises.crud.model.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import com.moises.crud.model.Produto;
 import com.moises.crud.repository.ProdutoRepository;
 
@@ -31,6 +28,25 @@ public class ProdutoController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Produto adicionar(@RequestBody Produto produto) {
 		return produtoRepository.save(produto);
+	}
+	@PutMapping(value = "atualizar")
+	@ResponseBody
+	public ResponseEntity<?> atualizar(@RequestBody Produto produto){
+		if(produto.getId() == null){
+			return new ResponseEntity<String>("Informe o id do produto", HttpStatus.OK);
+		}
+		Produto produtoAtualizado = produtoRepository.saveAndFlush(produto);
+
+		return new ResponseEntity<Produto>(produtoAtualizado, HttpStatus.OK);
+	}
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<?> deletar(@RequestBody Produto produto){
+		if(produto.getId() == null){
+			return new ResponseEntity<String>("Informe o id do produto", HttpStatus.OK);
+		}
+		produtoRepository.deleteById(produto.getId());
+
+		return ResponseEntity.noContent().build();
 	}
 	
 }
