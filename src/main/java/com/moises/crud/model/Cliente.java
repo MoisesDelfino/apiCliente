@@ -1,5 +1,6 @@
 package com.moises.crud.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -30,6 +31,6 @@ public class Cliente {
 	private String nome;
 
 
-	@OneToMany(mappedBy = "cliente_id", orphanRemoval = true, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Produto> produtos;
 }

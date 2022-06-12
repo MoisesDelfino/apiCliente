@@ -27,6 +27,6 @@ public class Produto {
 	private double precoUnitario;
 
 	@ManyToOne
-	@JoinColumn(name = "cliente_id", nullable = true)
-	private Cliente cliente_id;
+	@JoinColumn(name="cliente")
+	private Cliente cliente;
 }
